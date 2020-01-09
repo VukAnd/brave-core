@@ -47,6 +47,9 @@ class Promotion {
       ledger::PromotionPtr promotion,
       ledger::ResultCallback callback);
 
+  void SetLastCheckTimerIdForTesting(uint32_t timer_id);
+  void SetRetryTimerIdForTesting(uint32_t timer_id);
+
  private:
   void OnFetch(
       const int response_status_code,

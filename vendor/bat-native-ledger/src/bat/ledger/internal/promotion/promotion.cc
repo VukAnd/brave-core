@@ -695,4 +695,14 @@ void Promotion::FinishPromotion(
   ledger_->UnblindedTokensReady();
 }
 
+void Promotion::SetLastCheckTimerIdForTesting(
+    uint32_t timer_id) {
+  last_check_timer_id_ = timer_id;
+}
+
+void Promotion::SetRetryTimerIdForTesting(
+    uint32_t timer_id) {
+  retry_timer_id_ = timer_id;
+}
+
 }  // namespace braveledger_promotion
