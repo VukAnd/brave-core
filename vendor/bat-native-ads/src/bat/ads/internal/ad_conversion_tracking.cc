@@ -259,7 +259,7 @@ base::Value AdConversionTracking::GetAsList() {
     dictionary.SetKey(kAdConversionUuidKey,
         base::Value(queue_item.uuid));
 
-    list.GetList().push_back(std::move(dictionary));
+    list.Insert(list.GetList().end(), std::move(dictionary));
   }
 
   return list;

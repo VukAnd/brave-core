@@ -246,7 +246,7 @@ std::vector<std::string> Prefs::GetRecordsToResend() const {
 void Prefs::AddToRecordsToResend(const std::string& object_id,
                                  std::unique_ptr<base::DictionaryValue> meta) {
   ListPrefUpdate list_update(pref_service_, kSyncRecordsToResend);
-  list_update->GetList().emplace_back(object_id);
+  list_update->Insert(list_update->GetList().end(), base::Value(object_id));
   SetRecordToResendMeta(object_id, std::move(meta));
 }
 

@@ -130,7 +130,7 @@ base::Value TransactionsInfo::GetTransactionsAsList() const {
     transaction_dictionary.SetKey("confirmation_type",
         base::Value(transaction.confirmation_type));
 
-    list.GetList().push_back(std::move(transaction_dictionary));
+    list.Insert(list.GetList().end(), std::move(transaction_dictionary));
   }
 
   return list;

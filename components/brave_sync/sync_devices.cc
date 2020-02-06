@@ -71,7 +71,8 @@ std::unique_ptr<base::Value> SyncDevices::ToValue() const {
 
   auto arr_devices = std::make_unique<base::Value>(base::Value::Type::LIST);
   for (const SyncDevice &device : devices_) {
-    arr_devices->GetList().push_back(std::move(*device.ToValue()));
+    arr_devices->Insert(arr_devices->GetList().end(),
+                        std::move(*device.ToValue()));
   }
 
   val_sync_device->SetKey("devices", std::move(*arr_devices));
@@ -82,7 +83,8 @@ std::unique_ptr<base::Value> SyncDevices::ToValue() const {
 std::unique_ptr<base::Value> SyncDevices::ToValueArrOnly() const {
   auto arr_devices = std::make_unique<base::Value>(base::Value::Type::LIST);
   for (const SyncDevice &device : devices_) {
-    arr_devices->GetList().push_back(std::move(*device.ToValue()));
+    arr_devices->Insert(arr_devices->GetList().end(),
+                        std::move(*device.ToValue()));
   }
 
   return arr_devices;

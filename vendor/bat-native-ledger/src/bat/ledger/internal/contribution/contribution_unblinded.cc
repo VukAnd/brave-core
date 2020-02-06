@@ -102,7 +102,7 @@ std::string GenerateTokenPayload(
     } else {
       GenerateSuggestion(item, suggestion_encoded, &token);
     }
-    credentials.GetList().push_back(std::move(token));
+    credentials.Insert(credentials.GetList().end(), std::move(token));
   }
 
   base::Value payload(base::Value::Type::DICTIONARY);

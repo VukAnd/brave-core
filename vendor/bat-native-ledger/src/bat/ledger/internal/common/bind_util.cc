@@ -19,7 +19,7 @@ std::string FromContributionQueueToString(ledger::ContributionQueuePtr info) {
     publisher.SetStringKey("publisher_key", item->publisher_key);
     publisher.SetStringKey("amount_percent",
         std::to_string(item->amount_percent));
-    publishers.GetList().push_back(std::move(publisher));
+    publishers.Insert(publishers.GetList().end(), std::move(publisher));
   }
 
   base::Value queue(base::Value::Type::DICTIONARY);
