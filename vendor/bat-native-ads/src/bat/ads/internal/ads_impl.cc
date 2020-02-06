@@ -2226,11 +2226,7 @@ bool AdsImpl::DomainsMatch(
 
 std::string AdsImpl::GetDomain(
     const std::string& url) const {
-  auto host_piece = GURL(url).host_piece();
-
-  std::string domain;
-  host_piece.CopyToString(&domain);
-
+  std::string domain = std::string(GURL(url).host_piece());
   return domain;
 }
 
