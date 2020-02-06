@@ -1,7 +1,7 @@
-diff --git a/chrome/browser/ui/webui/settings/settings_import_data_handler.cc b/chrome/browser/ui/webui/settings/settings_import_data_handler.cc
-index b2e78bd722b68c0eca2962ee1f399d1edc8114f5..c10c90eb4dc47f966b68ee54effec0b3baf8005d 100644
---- a/chrome/browser/ui/webui/settings/settings_import_data_handler.cc
-+++ b/chrome/browser/ui/webui/settings/settings_import_data_handler.cc
+diff --git a/chrome/browser/ui/webui/settings/import_data_handler.cc b/chrome/browser/ui/webui/settings/import_data_handler.cc
+index d58683fd6bac17138282b17b9e4b0f4e45d0c09d..183a3b17a331c8e5ec136aaa012b23766ece453f 100644
+--- a/chrome/browser/ui/webui/settings/import_data_handler.cc
++++ b/chrome/browser/ui/webui/settings/import_data_handler.cc
 @@ -18,6 +18,8 @@
  #include "base/strings/utf_string_conversions.h"
  #include "base/threading/thread_restrictions.h"
@@ -11,7 +11,7 @@ index b2e78bd722b68c0eca2962ee1f399d1edc8114f5..c10c90eb4dc47f966b68ee54effec0b3
  #include "chrome/browser/browser_process.h"
  #include "chrome/browser/importer/external_process_importer_host.h"
  #include "chrome/browser/importer/importer_list.h"
-@@ -96,12 +98,12 @@ void ImportDataHandler::StartImport(
+@@ -96,11 +98,11 @@ void ImportDataHandler::StartImport(
                      base::Value(kImportStatusInProgress));
    import_did_succeed_ = false;
  
@@ -19,29 +19,28 @@ index b2e78bd722b68c0eca2962ee1f399d1edc8114f5..c10c90eb4dc47f966b68ee54effec0b3
 +  importer_host_ = new BraveExternalProcessImporterHost();
    importer_host_->set_observer(this);
    Profile* profile = Profile::FromWebUI(web_ui());
-   importer_host_->StartImportSettings(source_profile, profile,
-                                       imported_items,
+   importer_host_->StartImportSettings(source_profile, profile, imported_items,
 -                                      new ProfileWriter(profile));
 +                                      new BraveProfileWriter(profile));
  
    importer::LogImporterUseToMetrics("ImportDataHandler",
                                      source_profile.importer_type);
-@@ -126,6 +128,14 @@ void ImportDataHandler::ImportData(const base::ListValue* args) {
+@@ -126,6 +128,14 @@ void ImportDataHandler::HandleImportData(const base::ListValue* args) {
      selected_items |= importer::PASSWORDS;
-   if (prefs->GetBoolean(prefs::kImportDialogSearchEngine))
+   if (*types->FindBoolKey(prefs::kImportDialogSearchEngine))
      selected_items |= importer::SEARCH_ENGINES;
-+  if (prefs->GetBoolean(prefs::kImportDialogCookies))
++  if (*types->FindBoolKey(prefs::kImportDialogCookies))
 +    selected_items |= importer::COOKIES;
-+  if (prefs->GetBoolean(prefs::kImportDialogStats))
++  if (*types->FindBoolKey(prefs::kImportDialogStats))
 +    selected_items |= importer::STATS;
-+  if (prefs->GetBoolean(prefs::kImportDialogLedger))
++  if (*types->FindBoolKey(prefs::kImportDialogLedger))
 +    selected_items |= importer::LEDGER;
-+  if (prefs->GetBoolean(prefs::kImportDialogWindows))
++  if (*types->FindBoolKey(prefs::kImportDialogWindows))
 +    selected_items |= importer::WINDOWS;
  
    const importer::SourceProfile& source_profile =
        importer_list_->GetSourceProfileAt(browser_index);
-@@ -179,6 +189,14 @@ void ImportDataHandler::SendBrowserProfileData(const std::string& callback_id) {
+@@ -202,6 +212,14 @@ void ImportDataHandler::SendBrowserProfileData(const std::string& callback_id) {
      browser_profile->SetBoolean(
          "autofillFormData",
          (browser_services & importer::AUTOFILL_FORM_DATA) != 0);
