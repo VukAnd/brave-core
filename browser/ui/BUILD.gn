@@ -173,6 +173,13 @@ source_set("ui") {
     ]
   }
 
+  if (is_mac) {
+    sources += [
+      "webui/settings/brave_settings_import_data_handler.mm",
+      "webui/settings/brave_settings_import_data_handler.h",
+    ]
+  }
+
   deps = [
     "//base",
     "//brave/app:command_ids",
@@ -215,6 +222,7 @@ source_set("ui") {
     "//ui/base",
     "//ui/gfx",
     "//ui/resources",
+    "//url",
   ]
 
   # This is no longer compiled into Chromium on Android, but we still

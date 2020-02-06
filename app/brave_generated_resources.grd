@@ -716,6 +716,15 @@ By installing this extension, you are agreeing to the Google Widevine Terms of U
       <message name="IDS_BRAVE_BOOKMARK_MANAGER_EMPTY_LIST" desc="">
         To add a bookmark, click the bookmark button next to the address bar
       </message>
+      <message name="IDS_FULL_DISK_ACCESS_CONFIRM_DIALOG_TITLE" desc="The label for full disk access dialog title">
+        Full Disk access required
+      </message>
+      <message name="IDS_FULL_DISK_ACCESS_CONFIRM_DIALOG_MESSAGE" desc="The label for full disk access dialog message">
+        Brave needs full disk access to import browsing data from Safari.
+      </message>
+      <message name="IDS_FULL_DISK_ACCESS_CONFIRM_DIALOG_LINK_TEXT" desc="The label for full disk access dialog link text">
+        Learn how to grant Full Disk Access
+      </message>
     </messages>
   </release>
 </grit>
