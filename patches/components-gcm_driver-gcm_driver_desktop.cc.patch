@@ -1,0 +1,12 @@
+diff --git a/components/gcm_driver/gcm_driver_desktop.cc b/components/gcm_driver/gcm_driver_desktop.cc
+index 739ce33736909b4d219120aa6952dd0eb8ce47e1..85c295337dcefca464a3825a4cf192e99c5caae4 100644
+--- a/components/gcm_driver/gcm_driver_desktop.cc
++++ b/components/gcm_driver/gcm_driver_desktop.cc
+@@ -1224,6 +1224,7 @@ GCMClient::Result GCMDriverDesktop::EnsureStarted(
+   if (app_handlers().empty())
+     return GCMClient::UNKNOWN_ERROR;
+ 
++  BRAVE_GCMDRIVERDESKTOP_ENSURESTARTED
+   if (!delayed_task_controller_)
+     delayed_task_controller_.reset(new GCMDelayedTaskController);
+ 

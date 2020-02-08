@@ -77,6 +77,9 @@ const char kAlwaysShowBookmarkBarOnNTP[] =
 const char kRemoteDebuggingEnabled[] = "brave.remote_debugging_enabled";
 const char kAutocompleteEnabled[] = "brave.autocomplete_enabled";
 const char kBraveDarkMode[] = "brave.dark_mode";
+#if !BUILDFLAG(USE_GCM_FROM_PLATFORM)
+const char kBraveGCMChannelStatus[] = "brave.gcm.channel_status";
+#endif
 
 #if defined(OS_ANDROID)
 const char kDesktopModeEnabled[] = "brave.desktop_mode_enabled";

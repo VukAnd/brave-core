@@ -7,8 +7,8 @@
 
 #include <memory>
 
+#include "brave/common/pref_names.h"
 #include "chrome/browser/profiles/profile.h"
-#include "components/gcm_driver/gcm_channel_status_syncer.h"
 #include "components/prefs/pref_service.h"
 
 namespace gcm {
@@ -22,8 +22,7 @@ BraveGCMChannelStatus* BraveGCMChannelStatus::GetForProfile(
       profile->GetUserData(kBraveGCMStatusKey));
 
   if (!status) {
-    bool enabled = profile->GetPrefs()->GetBoolean(
-        gcm::prefs::kGCMChannelStatus);
+    bool enabled = profile->GetPrefs()->GetBoolean(kBraveGCMChannelStatus);
     // Object cleanup is handled by SupportsUserData
     profile->SetUserData(kBraveGCMStatusKey,
                         std::make_unique<BraveGCMChannelStatus>(enabled));

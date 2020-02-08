@@ -1,0 +1,12 @@
+diff --git a/components/gcm_driver/BUILD.gn b/components/gcm_driver/BUILD.gn
+index 79087eadc646a1503f2e464e22b1b35761e5609c..2acfc8c213618f1cca003108d98250996860941e 100644
+--- a/components/gcm_driver/BUILD.gn
++++ b/components/gcm_driver/BUILD.gn
+@@ -110,6 +110,7 @@ static_library("gcm_driver") {
+       "//components/crx_file",
+       "//google_apis/gcm",
+     ]
++    deps += [ "//brave/browser/gcm_driver" ]
+   }
+ 
+   if (is_android) {

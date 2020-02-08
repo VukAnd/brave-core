@@ -9,11 +9,9 @@ source_set("gcm_driver") {
     ]
 
     deps = [
-      "//components/gcm_driver:gcm_driver",
-      "//components/prefs",
+      "//brave/common:pref_names",
       # For profile.h
       "//content/public/browser",
-      "//net",
     ]
   }
 }

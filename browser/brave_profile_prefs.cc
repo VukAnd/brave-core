@@ -36,10 +36,6 @@
 #include "chrome/browser/first_run/first_run.h"
 #endif
 
-#if !BUILDFLAG(USE_GCM_FROM_PLATFORM)
-#include "components/gcm_driver/gcm_channel_status_syncer.h"
-#endif
-
 #if BUILDFLAG(ENABLE_WIDEVINE)
 #include "brave/browser/widevine/widevine_utils.h"
 #endif
@@ -98,8 +94,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 
 #if !BUILDFLAG(USE_GCM_FROM_PLATFORM)
   // PushMessaging
-  registry->SetDefaultPrefValue(gcm::prefs::kGCMChannelStatus,
-                                base::Value(false));
+  registry->RegisterBooleanPref(kBraveGCMChannelStatus, false);
 #endif
 
   registry->RegisterBooleanPref(kShieldsAdvancedViewEnabled,
