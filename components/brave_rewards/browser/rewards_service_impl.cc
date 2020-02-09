@@ -805,11 +805,11 @@ void RewardsServiceImpl::OnXHRLoad(SessionID tab_id,
 void RewardsServiceImpl::LoadPublisherInfo(
     const std::string& publisher_key,
     ledger::PublisherInfoCallback callback) {
-  base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&LoadPublisherInfoOnFileTaskRunner,
-          publisher_key, publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnPublisherInfoLoaded,
-                     AsWeakPtr(),
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&LoadPublisherInfoOnFileTaskRunner, publisher_key,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnPublisherInfoLoaded, AsWeakPtr(),
                      callback));
 }
 
@@ -827,12 +827,12 @@ void RewardsServiceImpl::OnPublisherInfoLoaded(
 void RewardsServiceImpl::LoadMediaPublisherInfo(
     const std::string& media_key,
     ledger::PublisherInfoCallback callback) {
-  base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&LoadMediaPublisherInfoOnFileTaskRunner,
-          media_key, publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnMediaPublisherInfoLoaded,
-                     AsWeakPtr(),
-                     callback));
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&LoadMediaPublisherInfoOnFileTaskRunner, media_key,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnMediaPublisherInfoLoaded,
+                     AsWeakPtr(), callback));
 }
 
 void RewardsServiceImpl::OnMediaPublisherInfoLoaded(
@@ -852,12 +852,11 @@ void RewardsServiceImpl::OnMediaPublisherInfoLoaded(
 void RewardsServiceImpl::SaveMediaPublisherInfo(
     const std::string& media_key,
     const std::string& publisher_id) {
-base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&SaveMediaPublisherInfoOnFileTaskRunner,
-                    media_key,
-                    publisher_id,
-                    publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnMediaPublisherInfoSaved,
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&SaveMediaPublisherInfoOnFileTaskRunner, media_key,
+                     publisher_id, publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnMediaPublisherInfoSaved,
                      AsWeakPtr()));
 }
 
@@ -2625,12 +2624,12 @@ void RewardsServiceImpl::OnGetRecurringTips(
 
 void RewardsServiceImpl::GetRecurringTips(
     ledger::PublisherInfoListCallback callback) {
-  base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&GetRecurringTipsOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnGetRecurringTips,
-                 AsWeakPtr(),
-                 callback));
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&GetRecurringTipsOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnGetRecurringTips, AsWeakPtr(),
+                     callback));
 }
 
 void RewardsServiceImpl::OnGetOneTimeTipsUI(
@@ -2670,12 +2669,12 @@ ledger::PublisherInfoList GetOneTimeTipsOnFileTaskRunner(
 
 void RewardsServiceImpl::GetOneTimeTips(
     ledger::PublisherInfoListCallback callback) {
-  base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&GetOneTimeTipsOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnGetOneTimeTips,
-                 AsWeakPtr(),
-                 callback));
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&GetOneTimeTipsOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnGetOneTimeTips, AsWeakPtr(),
+                     callback));
 }
 
 void RewardsServiceImpl::OnGetOneTimeTips(
@@ -2730,13 +2729,12 @@ void RewardsServiceImpl::OnRemoveRecurringTip(
 void RewardsServiceImpl::RemoveRecurringTip(
   const std::string& publisher_key,
   ledger::RemoveRecurringTipCallback callback) {
-  base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
-      base::Bind(&RemoveRecurringTipOnFileTaskRunner,
-                    publisher_key,
-                    publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnRemoveRecurringTip,
-                 AsWeakPtr(),
-                 callback));
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&RemoveRecurringTipOnFileTaskRunner, publisher_key,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnRemoveRecurringTip, AsWeakPtr(),
+                     callback));
 }
 
 void RewardsServiceImpl::UpdateAdsRewards() const {
@@ -3180,13 +3178,11 @@ void RewardsServiceImpl::OnGetPendingContributionsTotal(
 void RewardsServiceImpl::GetPendingContributionsTotal(
     ledger::PendingContributionsTotalCallback callback) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&PendingContributionsTotalOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnGetPendingContributionsTotal,
-                 AsWeakPtr(),
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&PendingContributionsTotalOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnGetPendingContributionsTotal,
+                     AsWeakPtr(), callback));
 }
 
 bool RestorePublisherOnFileTaskRunner(PublisherInfoDatabase* backend) {
@@ -3200,13 +3196,11 @@ bool RestorePublisherOnFileTaskRunner(PublisherInfoDatabase* backend) {
 void RewardsServiceImpl::RestorePublishers(
   ledger::RestorePublishersCallback callback) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&RestorePublisherOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnRestorePublishers,
-                 AsWeakPtr(),
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&RestorePublisherOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnRestorePublishers, AsWeakPtr(),
+                     callback));
 }
 
 void RewardsServiceImpl::OnRestorePublishers(
@@ -3289,16 +3283,12 @@ void RewardsServiceImpl::OnDeleteActivityInfoStamp(
     const ledger::DeleteActivityInfoCallback& callback,
     uint64_t reconcile_stamp) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&DeleteActivityInfoOnFileTaskRunner,
-                 publisher_info_backend_.get(),
-                 publisher_key,
-                 reconcile_stamp),
-      base::Bind(&RewardsServiceImpl::OnDeleteActivityInfo,
-                 AsWeakPtr(),
-                 publisher_key,
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&DeleteActivityInfoOnFileTaskRunner,
+                     publisher_info_backend_.get(), publisher_key,
+                     reconcile_stamp),
+      base::BindOnce(&RewardsServiceImpl::OnDeleteActivityInfo, AsWeakPtr(),
+                     publisher_key, callback));
 }
 
 void RewardsServiceImpl::OnDeleteActivityInfo(
@@ -3446,13 +3436,11 @@ void RewardsServiceImpl::OnGetPendingContributions(
 void RewardsServiceImpl::GetPendingContributions(
     ledger::PendingContributionInfoListCallback callback) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&PendingContributionsOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnGetPendingContributions,
-                 AsWeakPtr(),
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&PendingContributionsOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnGetPendingContributions,
+                     AsWeakPtr(), callback));
 }
 
 void RewardsServiceImpl::OnPendingContributionRemovedUI(
@@ -3483,14 +3471,11 @@ void RewardsServiceImpl::RemovePendingContribution(
     const uint64_t id,
     ledger::RemovePendingContributionCallback callback) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&RemovePendingContributionOnFileTaskRunner,
-                 publisher_info_backend_.get(),
-                 id),
-      base::Bind(&RewardsServiceImpl::OnPendingContributionRemoved,
-                 AsWeakPtr(),
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&RemovePendingContributionOnFileTaskRunner,
+                     publisher_info_backend_.get(), id),
+      base::BindOnce(&RewardsServiceImpl::OnPendingContributionRemoved,
+                     AsWeakPtr(), callback));
 }
 
 void RewardsServiceImpl::OnPendingContributionRemoved(
@@ -3538,13 +3523,11 @@ void RewardsServiceImpl::OnRemoveAllPendingContribution(
 void RewardsServiceImpl::RemoveAllPendingContributions(
     ledger::RemovePendingContributionCallback callback) {
   base::PostTaskAndReplyWithResult(
-      file_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&RemoveAllPendingContributionOnFileTaskRunner,
-                 publisher_info_backend_.get()),
-      base::Bind(&RewardsServiceImpl::OnRemoveAllPendingContribution,
-                 AsWeakPtr(),
-                 callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&RemoveAllPendingContributionOnFileTaskRunner,
+                     publisher_info_backend_.get()),
+      base::BindOnce(&RewardsServiceImpl::OnRemoveAllPendingContribution,
+                     AsWeakPtr(), callback));
 }
 
 void RewardsServiceImpl::OnContributeUnverifiedPublishers(
@@ -3848,14 +3831,11 @@ void RewardsServiceImpl::ClearAndInsertServerPublisherList(
     ledger::ServerPublisherInfoList list,
     ledger::ClearAndInsertServerPublisherListCallback callback) {
   base::PostTaskAndReplyWithResult(
-    file_task_runner_.get(),
-    FROM_HERE,
-    base::Bind(&ClearAndInsertServerPublisherListOnFileTaskRunner,
-               publisher_info_backend_.get(),
-               std::move(list)),
-    base::Bind(&RewardsServiceImpl::OnClearAndInsertServerPublisherList,
-               AsWeakPtr(),
-               callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&ClearAndInsertServerPublisherListOnFileTaskRunner,
+                     publisher_info_backend_.get(), std::move(list)),
+      base::BindOnce(&RewardsServiceImpl::OnClearAndInsertServerPublisherList,
+                     AsWeakPtr(), callback));
 }
 
 void RewardsServiceImpl::OnClearAndInsertServerPublisherList(
@@ -3882,14 +3862,11 @@ void RewardsServiceImpl::GetServerPublisherInfo(
     const std::string& publisher_key,
     ledger::GetServerPublisherInfoCallback callback) {
   base::PostTaskAndReplyWithResult(
-    file_task_runner_.get(),
-    FROM_HERE,
-    base::Bind(&GetServerPublisherInfoOnFileTaskRunner,
-               publisher_info_backend_.get(),
-               publisher_key),
-    base::Bind(&RewardsServiceImpl::OnGetServerPublisherInfo,
-               AsWeakPtr(),
-               callback));
+      file_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&GetServerPublisherInfoOnFileTaskRunner,
+                     publisher_info_backend_.get(), publisher_key),
+      base::BindOnce(&RewardsServiceImpl::OnGetServerPublisherInfo, AsWeakPtr(),
+                     callback));
 }
 
 void RewardsServiceImpl::OnGetServerPublisherInfo(
