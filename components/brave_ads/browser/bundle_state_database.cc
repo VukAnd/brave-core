@@ -341,9 +341,9 @@ bool BundleStateDatabase::InsertOrUpdateAdInfo(const ads::AdInfo& info) {
     ad_info_statement.BindString(5, info.end_timestamp);
     ad_info_statement.BindString(6, info.uuid);
     ad_info_statement.BindString(7, info.campaign_id);
-    ad_info_statement.BindInt(8, info.daily_cap);
-    ad_info_statement.BindInt(9, info.per_day);
-    ad_info_statement.BindInt(10, info.total_max);
+    ad_info_statement.BindInt(8, static_cast<int>(info.daily_cap));
+    ad_info_statement.BindInt(9, static_cast<int>(info.per_day));
+    ad_info_statement.BindInt(10, static_cast<int>(info.total_max));
     ad_info_statement.BindString(11, *it);
     if (!ad_info_statement.Run()) {
       return false;
@@ -373,7 +373,7 @@ bool BundleStateDatabase::InsertOrUpdateAdConversion(
   statement.BindString(0, ad_conversion.creative_set_id);
   statement.BindString(1, ad_conversion.type);
   statement.BindString(2, ad_conversion.url_pattern);
-  statement.BindInt(3, ad_conversion.observation_window);
+  statement.BindInt(3, static_cast<int>(ad_conversion.observation_window));
 
   return statement.Run();
 }

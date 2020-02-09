@@ -196,7 +196,7 @@ bool DatabasePromotion::InsertOrUpdate(
     db->GetCachedStatement(SQL_FROM_HERE, query.c_str()));
 
   statement.BindString(0, info->id);
-  statement.BindInt(1, info->version);
+  statement.BindInt(1, static_cast<int>(info->version));
   statement.BindInt(2, static_cast<int>(info->type));
   statement.BindString(3, info->public_keys);
   statement.BindInt64(4, info->suggestions);

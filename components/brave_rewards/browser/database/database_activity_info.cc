@@ -99,7 +99,7 @@ void GenerateActivityFilterBind(
   }
 
   if (filter->min_duration > 0) {
-    statement->BindInt(column++, filter->min_duration);
+    statement->BindInt64(column++, filter->min_duration);
   }
 
   if (filter->excluded != ledger::ExcludeFilter::FILTER_ALL &&
@@ -115,11 +115,11 @@ void GenerateActivityFilterBind(
   }
 
   if (filter->percent > 0) {
-    statement->BindInt(column++, filter->percent);
+    statement->BindInt(column++, static_cast<int>(filter->percent));
   }
 
   if (filter->min_visits > 0) {
-    statement->BindInt(column++, filter->min_visits);
+    statement->BindInt(column++, static_cast<int>(filter->min_visits));
   }
 }
 
@@ -509,7 +509,7 @@ bool DatabaseActivityInfo::InsertOrUpdate(
   statement.BindInt64(3, static_cast<int>(info->percent));
   statement.BindDouble(4, info->weight);
   statement.BindInt64(5, info->reconcile_stamp);
-  statement.BindInt(6, info->visits);
+  statement.BindInt(6, static_cast<int>(info->visits));
 
   return statement.Run();
 }
