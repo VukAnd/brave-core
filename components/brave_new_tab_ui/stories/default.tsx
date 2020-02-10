@@ -8,8 +8,15 @@ import { withKnobs, select, boolean } from '@storybook/addon-knobs/react'
 
 // Components
 import NewTabPage from './default/index'
+import { withThemesProvider } from 'storybook-addon-styled-component-theme'
+
+// Themes
+import newTabLightTheme from '../theme/newtab-light'
+import newTabDarkTheme from '../theme/newtab-dark'
+const themes = [newTabLightTheme, newTabDarkTheme]
 
 storiesOf('New Tab/Default', module)
+  .addDecorator(withThemesProvider(themes))
   .addDecorator(withKnobs)
   .add('Page', () => {
     return (

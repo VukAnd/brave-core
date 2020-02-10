@@ -6,8 +6,8 @@
 import * as React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import Theme from 'brave-ui/theme/brave-default'
-import DarkTheme from 'brave-ui/theme/brave-dark'
+import Theme from './theme/newtab-light'
+import DarkTheme from './theme/newtab-dark'
 import BraveCoreThemeProvider from '../common/BraveCoreThemeProvider'
 import { wireApiEventsToStore } from './apiEventsToStore'
 
