@@ -17,39 +17,6 @@
 
 namespace {
 
-typedef base::OnceCallback<void(BitmapFetcherService::RequestId request_id,
-                                const GURL& url,
-                                const SkBitmap& bitmap)>
-    RewardsResourceFetcherCallback;
-
-// Calls the specified callback when the requested image is downloaded.  This
-// is a separate class instead of being implemented on BraveRewardsSource
-// because BitmapFetcherService currently takes ownership of this object.
-class RewardsResourceFetcherObserver : public BitmapFetcherService::Observer {
- public:
-  explicit RewardsResourceFetcherObserver(
-      const GURL& url,
-      RewardsResourceFetcherCallback rewards_resource_fetcher_callback)
-      : url_(url),
-        rewards_resource_fetcher_callback_(
-            std::move(rewards_resource_fetcher_callback)) {}
-
-  void OnImageChanged(BitmapFetcherService::RequestId request_id,
-                      const SkBitmap& image) override {
-    DCHECK(!image.empty());
-    // BitmapFetcherService does not invoke OnImageChanged more than once, in
-    // spite of what the method name suggests.
-    DCHECK(rewards_resource_fetcher_callback_);
-    std::move(rewards_resource_fetcher_callback_).Run(request_id, url_, image);
-  }
-
- private:
-  GURL url_;
-  RewardsResourceFetcherCallback rewards_resource_fetcher_callback_;
-
-  DISALLOW_COPY_AND_ASSIGN(RewardsResourceFetcherObserver);
-};
-
 scoped_refptr<base::RefCountedMemory> BitmapToMemory(const SkBitmap* image) {
   base::RefCountedBytes* image_bytes = new base::RefCountedBytes;
   gfx::PNGCodec::EncodeBGRASkBitmap(*image, false, &image_bytes->data());
@@ -87,6 +54,7 @@ void BraveRewardsSource::StartDataRequest(
   BitmapFetcherService* image_service =
       BitmapFetcherServiceFactory::GetForBrowserContext(profile_);
   if (image_service) {
+    /*
     net::NetworkTrafficAnnotationTag traffic_annotation =
         net::DefineNetworkTrafficAnnotation("brave_rewards_resource_fetcher", R"(
         semantics {
@@ -106,15 +74,13 @@ void BraveRewardsSource::StartDataRequest(
           policy_exception_justification:
             "Not implemented."
         })");
+    */
     resource_fetchers_.emplace_back(url);
-    request_ids_.push_back(image_service->RequestImage(
-        url,
-        // Image Service takes ownership of the observer.
-        new RewardsResourceFetcherObserver(
-            url, base::BindOnce(&BraveRewardsSource::OnBitmapFetched,
-                                base::Unretained(this),
-                                std::move(got_data_callback))),
-        traffic_annotation));
+    BitmapFetcherService::RequestId request_id = image_service->RequestImage(
+        url, base::BindOnce(&BraveRewardsSource::OnBitmapFetched,
+                            base::Unretained(this),
+                            std::move(got_data_callback), request_id, url));
+    request_ids_.push_back(request_id);
   }
 }
 

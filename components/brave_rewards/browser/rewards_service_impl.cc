@@ -50,7 +50,6 @@
 #include "brave/components/brave_rewards/browser/content_site.h"
 #include "brave/components/brave_rewards/browser/publisher_banner.h"
 #include "brave/components/brave_rewards/browser/database/publisher_info_database.h"
-#include "brave/components/brave_rewards/browser/rewards_fetcher_service_observer.h"
 #include "brave/components/brave_rewards/browser/rewards_notification_service.h"
 #include "brave/components/brave_rewards/browser/rewards_notification_service_impl.h"
 #include "brave/components/brave_rewards/browser/rewards_p3a.h"
@@ -362,6 +361,7 @@ void EnsureRewardsBaseDirectoryExists(const base::FilePath& path) {
     base::CreateDirectory(path);
 }
 
+/*
 net::NetworkTrafficAnnotationTag
 GetNetworkTrafficAnnotationTagForFaviconFetch() {
   return net::DefineNetworkTrafficAnnotation(
@@ -384,6 +384,7 @@ GetNetworkTrafficAnnotationTagForFaviconFetch() {
           "Not implemented."
       })");
 }
+*/
 
 net::NetworkTrafficAnnotationTag GetNetworkTrafficAnnotationTagForURLLoad() {
   return net::DefineNetworkTrafficAnnotation("rewards_service_impl", R"(
@@ -2320,15 +2321,11 @@ void RewardsServiceImpl::FetchFavIcon(const std::string& url,
       BitmapFetcherServiceFactory::GetForBrowserContext(profile_);
   if (image_service) {
     current_media_fetchers_.emplace_back(url);
-    request_ids_.push_back(image_service->RequestImage(
-          parsedUrl,
-          // Image Service takes ownership of the observer
-          new RewardsFetcherServiceObserver(
-              favicon_key,
-              parsedUrl,
-              base::Bind(&RewardsServiceImpl::OnFetchFavIconCompleted,
-                  base::Unretained(this), callback)),
-          GetNetworkTrafficAnnotationTagForFaviconFetch()));
+    BitmapFetcherService::RequestId request_id = image_service->RequestImage(
+        parsedUrl, base::Bind(&RewardsServiceImpl::OnFetchFavIconCompleted,
+                              base::Unretained(this), callback, favicon_key,
+                              parsedUrl, request_id));
+    request_ids_.push_back(request_id);
   }
 }
 
