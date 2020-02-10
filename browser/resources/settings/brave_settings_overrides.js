@@ -154,11 +154,18 @@ BravePatching.RegisterPolymerTemplateModifications({
     const appearanceBrowserEl = getMenuElement(templateContent, '/appearance')
     getStartedEl.insertAdjacentElement('afterend', appearanceBrowserEl)
     // Add Sync item
+    const isSyncEnabled = !loadTimeData.getBoolean('isSyncDisabled')
     const syncEl = createMenuElement(loadTimeData.getString('braveSync'), '/braveSync', 'brave_settings:sync')
-    appearanceBrowserEl.insertAdjacentElement('afterend', syncEl)
+    if (isSyncEnabled) {
+      appearanceBrowserEl.insertAdjacentElement('afterend', syncEl)
+    }
     // Add Help Tips item
     const helpTipsEl = createMenuElement(loadTimeData.getString('braveHelpTips'), '/braveHelpTips', 'brave_settings:help')
-    syncEl.insertAdjacentElement('afterend', helpTipsEl)
+    if (isSyncEnabled) {
+      syncEl.insertAdjacentElement('afterend', helpTipsEl)
+    } else {
+      appearanceBrowserEl.insertAdjacentElement('afterend', helpTipsEl)
+    }
     // Add Shields item
     const shieldsEl = createMenuElement(loadTimeData.getString('braveShieldsTitle'), '/shields',  'brave_settings:shields')
     helpTipsEl.insertAdjacentElement('afterend', shieldsEl)
