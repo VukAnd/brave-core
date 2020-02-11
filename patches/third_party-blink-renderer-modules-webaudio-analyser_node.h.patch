@@ -1,0 +1,31 @@
+diff --git a/third_party/blink/renderer/modules/webaudio/analyser_node.h b/third_party/blink/renderer/modules/webaudio/analyser_node.h
+index b859ca7b01431271372970b2b790476883b27a75..b29cd829ca17477278b0e07e96896fbf8db2da31 100644
+--- a/third_party/blink/renderer/modules/webaudio/analyser_node.h
++++ b/third_party/blink/renderer/modules/webaudio/analyser_node.h
+@@ -39,7 +39,7 @@ class ExceptionState;
+ 
+ class AnalyserHandler final : public AudioBasicInspectorHandler {
+  public:
+-  static scoped_refptr<AnalyserHandler> Create(AudioNode&, float sample_rate);
++  static scoped_refptr<AnalyserHandler> Create(AudioNode&, float sample_rate, double fudge_factor);
+   ~AnalyserHandler() override;
+ 
+   // AudioHandler
+@@ -86,7 +86,7 @@ class AnalyserHandler final : public AudioBasicInspectorHandler {
+   double TailTime() const final;
+ 
+  private:
+-  AnalyserHandler(AudioNode&, float sample_rate);
++  AnalyserHandler(AudioNode&, float sample_rate, double fudge_factor);
+   bool PropagatesSilence() const override {
+     // An AnalyserNode does actually propogate silence, but to get the
+     // time and FFT data updated correctly, process() needs to be
+@@ -125,7 +125,7 @@ class AnalyserNode final : public AudioBasicInspectorNode {
+   // InspectorHelperMixin
+   void ReportDidCreate() final;
+   void ReportWillBeDestroyed() final;
+-
++  BRAVE_ANALYSERNODE_H
+  private:
+   AnalyserHandler& GetAnalyserHandler() const;
+ 

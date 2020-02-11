@@ -1,0 +1,26 @@
+diff --git a/base/unguessable_token.h b/base/unguessable_token.h
+index 895dbc46c4c66e7c7a082723e3208bde78e4d8b1..35f9f4362b959416a773528a98e53e63fdc6f025 100644
+--- a/base/unguessable_token.h
++++ b/base/unguessable_token.h
+@@ -7,6 +7,7 @@
+ 
+ #include <stdint.h>
+ #include <string.h>
++
+ #include <iosfwd>
+ #include <tuple>
+ 
+@@ -97,11 +98,13 @@ class BASE_EXPORT UnguessableToken {
+     return !(*this == other);
+   }
+ 
++  BRAVE_UNGUESSABLE_TOKEN_H
+  private:
+   friend struct UnguessableTokenHash;
+   explicit UnguessableToken(const Token& token);
+ 
+   base::Token token_;
++  BRAVE_UNGUESSABLE_TOKEN_PRIVATE_H
+ };
+ 
+ BASE_EXPORT std::ostream& operator<<(std::ostream& out,

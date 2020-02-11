@@ -1,0 +1,23 @@
+diff --git a/mojo/public/cpp/base/unguessable_token_mojom_traits.cc b/mojo/public/cpp/base/unguessable_token_mojom_traits.cc
+index 153d0a46b1eeb5e0fd115c46967419387b4a7dab..0de84c3ce5b2f763a6ccc6af5300187d6f6d2dcc 100644
+--- a/mojo/public/cpp/base/unguessable_token_mojom_traits.cc
++++ b/mojo/public/cpp/base/unguessable_token_mojom_traits.cc
+@@ -13,13 +13,15 @@ bool StructTraits<mojo_base::mojom::UnguessableTokenDataView,
+          base::UnguessableToken* out) {
+   uint64_t high = data.high();
+   uint64_t low = data.low();
++  uint64_t high2 = data.high2();
++  uint64_t low2 = data.low2();
+ 
+   // Receiving a zeroed UnguessableToken is a security issue.
+   if (high == 0 && low == 0)
+     return false;
+ 
+-  *out = base::UnguessableToken::Deserialize(high, low);
++  *out = base::UnguessableToken::Deserialize2(high, low, high2, low2);
+   return true;
+ }
+ 
+-}  // namespace mojo
+\ No newline at end of file
++}  // namespace mojo

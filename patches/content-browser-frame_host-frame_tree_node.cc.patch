@@ -1,0 +1,12 @@
+diff --git a/content/browser/frame_host/frame_tree_node.cc b/content/browser/frame_host/frame_tree_node.cc
+index cc1966c156dfa7ce45cf43db7695b7e6c3ec55e8..695796e68ac09a109ca9aa8ff01750786e7d98ad 100644
+--- a/content/browser/frame_host/frame_tree_node.cc
++++ b/content/browser/frame_host/frame_tree_node.cc
+@@ -130,6 +130,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
+       frame_owner_properties_(frame_owner_properties),
+       was_discarded_(false),
+       blame_context_(frame_tree_node_id_, parent) {
++  BRAVE_FRAMETREENODE_CONSTRUCTOR
+   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
+       g_frame_tree_node_id_map.Get().insert(
+           std::make_pair(frame_tree_node_id_, this));

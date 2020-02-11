@@ -1,0 +1,11 @@
+diff --git a/mojo/public/mojom/base/unguessable_token.mojom b/mojo/public/mojom/base/unguessable_token.mojom
+index 42aa7e21571a63a1bc29d725a1a3f6812c5078f6..612ee52b3d3b0119a9b512094f2fa7ced720659b 100644
+--- a/mojo/public/mojom/base/unguessable_token.mojom
++++ b/mojo/public/mojom/base/unguessable_token.mojom
+@@ -8,4 +8,6 @@ module mojo_base.mojom;
+ struct UnguessableToken {
+   uint64 high;
+   uint64 low;
++  uint64 high2;
++  uint64 low2;
+ };

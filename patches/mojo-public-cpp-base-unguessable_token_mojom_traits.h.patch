@@ -1,0 +1,30 @@
+diff --git a/mojo/public/cpp/base/unguessable_token_mojom_traits.h b/mojo/public/cpp/base/unguessable_token_mojom_traits.h
+index 5a6bb1f4c8d6a9bf490d21335c09f2797b79879a..9729a1f3b07283a31d21037409f56208a634ad40 100644
+--- a/mojo/public/cpp/base/unguessable_token_mojom_traits.h
++++ b/mojo/public/cpp/base/unguessable_token_mojom_traits.h
+@@ -13,8 +13,8 @@ namespace mojo {
+ 
+ // If base::UnguessableToken is no longer 128 bits, the logic below and the
+ // mojom::UnguessableToken type should be updated.
+-static_assert(sizeof(base::UnguessableToken) == 2 * sizeof(uint64_t),
+-              "base::UnguessableToken should be of size 2 * sizeof(uint64_t).");
++static_assert(sizeof(base::UnguessableToken) == 4 * sizeof(uint64_t),
++              "base::UnguessableToken should be of size 4 * sizeof(uint64_t).");
+ 
+ template <>
+ struct COMPONENT_EXPORT(MOJO_BASE_SHARED_TRAITS)
+@@ -28,6 +28,14 @@ struct COMPONENT_EXPORT(MOJO_BASE_SHARED_TRAITS)
+     return token.GetLowForSerialization();
+   }
+ 
++  static uint64_t high2(const base::UnguessableToken& token) {
++    return token.GetHigh2ForSerialization();
++  }
++
++  static uint64_t low2(const base::UnguessableToken& token) {
++    return token.GetLow2ForSerialization();
++  }
++
+   static bool Read(mojo_base::mojom::UnguessableTokenDataView data,
+                    base::UnguessableToken* out);
+ };

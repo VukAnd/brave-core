@@ -1,0 +1,39 @@
+diff --git a/ipc/ipc_message_utils.cc b/ipc/ipc_message_utils.cc
+index 566e36a03d1830fb9b5bc1a1416243897fe9ad7c..c7b77280b73547cc6f84074f668ac44fd01dfa9a 100644
+--- a/ipc/ipc_message_utils.cc
++++ b/ipc/ipc_message_utils.cc
+@@ -1254,8 +1254,7 @@ void ParamTraits<base::TimeTicks>::Log(const param_type& p, std::string* l) {
+ 
+ // If base::UnguessableToken is no longer 128 bits, the IPC serialization logic
+ // below should be updated.
+-static_assert(sizeof(base::UnguessableToken) == 2 * sizeof(uint64_t),
+-              "base::UnguessableToken should be of size 2 * sizeof(uint64_t).");
++BRAVE_IPC_MESSAGE_UTILS_UNGUESSABLETOKEN_ASSERT
+ 
+ void ParamTraits<base::UnguessableToken>::Write(base::Pickle* m,
+                                                 const param_type& p) {
+@@ -1263,22 +1262,13 @@ void ParamTraits<base::UnguessableToken>::Write(base::Pickle* m,
+ 
+   ParamTraits<uint64_t>::Write(m, p.GetHighForSerialization());
+   ParamTraits<uint64_t>::Write(m, p.GetLowForSerialization());
++  BRAVE_IPC_MESSAGE_UTILS_UNGUESSABLETOKEN_WRITE
+ }
+ 
+ bool ParamTraits<base::UnguessableToken>::Read(const base::Pickle* m,
+                                                base::PickleIterator* iter,
+                                                param_type* r) {
+-  uint64_t high, low;
+-  if (!ParamTraits<uint64_t>::Read(m, iter, &high) ||
+-      !ParamTraits<uint64_t>::Read(m, iter, &low))
+-    return false;
+-
+-  // Receiving a zeroed UnguessableToken is a security issue.
+-  if (high == 0 && low == 0)
+-    return false;
+-
+-  *r = base::UnguessableToken::Deserialize(high, low);
+-  return true;
++  BRAVE_IPC_MESSAGE_UTILS_UNGUESSABLETOKEN_READ
+ }
+ 
+ void ParamTraits<base::UnguessableToken>::Log(const param_type& p,
