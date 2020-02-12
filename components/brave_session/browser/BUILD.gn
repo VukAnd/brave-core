@@ -3,8 +3,7 @@ import("//brave/build/config.gni")
 source_set("browser") {
   sources = [
     "brave_session_token.cc",
-    "brave_session_token.h",
-    "brave_session.h"
+    "brave_session_token.h"
   ]
 
   deps = [
