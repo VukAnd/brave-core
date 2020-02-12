@@ -17,7 +17,7 @@
 #include "net/ssl/ssl_info.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
-#include "services/network/public/cpp/resource_response.h"
+#include "services/network/public/mojom/url_response_head.mojom.h"
 
 const char kMockSecureHostname[] = "example-secure.test";
 struct SecurityIndicatorTestParams {
@@ -66,7 +66,7 @@ class SecurityIndicatorTest
     ssl_info.cert_status = cert_status;
     ssl_info.ct_policy_compliance =
         net::ct::CTPolicyCompliance::CT_POLICY_COMPLIES_VIA_SCTS;
-    network::ResourceResponseHead resource_response;
+    network::mojom::URLResponseHead resource_response;
     resource_response.mime_type = "text/html";
     resource_response.ssl_info = ssl_info;
     params->client->OnReceiveResponse(resource_response);
