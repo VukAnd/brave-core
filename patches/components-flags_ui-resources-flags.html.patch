@@ -1,0 +1,21 @@
+diff --git a/components/flags_ui/resources/flags.html b/components/flags_ui/resources/flags.html
+index 46df47e9f54938051c0404f8ebb5d0ea953706e8..e6b69c76e9d33130edf43fb2103479c87833a2b1 100644
+--- a/components/flags_ui/resources/flags.html
++++ b/components/flags_ui/resources/flags.html
+@@ -59,12 +59,12 @@
+       <!-- Those strings are not localized because they only appear in
+            chrome://flags, which is not localized. -->
+       <span id="channel-promo-beta" hidden>
+-        Interested in cool new Chrome features? Try our
+-        <a href="https://chrome.com/beta">beta channel</a>.
++        Interested in cool new Brave features? Try our
++        <a href="https://brave.com/download-beta/">beta channel</a>.
+       </span>
+       <span id="channel-promo-dev" hidden>
+-        Interested in cool new Chrome features? Try our
+-        <a href="https://chrome.com/dev">dev channel</a>
++        Interested in cool new Brave features? Try our
++        <a href="https://brave.com/download-beta/">dev channel</a>
+       </span>
+     </p>
+     <ul class="tabs" role="tablist" aria-owns="tab-available tab-unavailable">
