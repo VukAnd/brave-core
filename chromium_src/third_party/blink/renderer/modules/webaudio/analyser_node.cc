@@ -13,7 +13,7 @@
 #include "third_party/blink/renderer/platform/bindings/script_state.h"
 
 namespace {
-  double GetFudgeFactor(blink::Document* document) {
+double GetFudgeFactor(blink::Document* document) {
   double fudge_factor;
   if (document) {
     base::StringPiece host =
