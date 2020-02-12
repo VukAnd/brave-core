@@ -69,6 +69,7 @@ class BraveContentBrowserClient : public ChromeContentBrowserClient {
       mojo::PendingRemote<network::mojom::TrustedURLLoaderHeaderClient>*
           header_client,
       bool* bypass_redirect_checks,
+      bool* disable_secure_dns,
       network::mojom::URLLoaderFactoryOverridePtr* factory_override) override;
 
   bool WillInterceptWebSocket(content::RenderFrameHost* frame) override;
