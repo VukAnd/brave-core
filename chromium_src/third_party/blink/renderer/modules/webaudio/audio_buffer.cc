@@ -22,6 +22,17 @@
     }                                                                         \
   }
 
+#define BRAVE_AUDIOBUFFER_COPYFROMCHANNEL                                   \
+  LocalDOMWindow* window = LocalDOMWindow::From(script_state);              \
+  if (window) {                                                             \
+    double fudge_factor = AnalyserNode::GetFudgeFactor(window->document()); \
+    LOG(INFO) << "copyFromChannel fudge factor = " << fudge_factor;         \
+    for (unsigned i = 0; i < count; ++i) {                                  \
+      dst[i + buffer_offset] = dst[i + buffer_offset] * fudge_factor;       \
+    }                                                                       \
+  }
+
 #include "../../../../third_party/blink/renderer/modules/webaudio/audio_buffer.cc"
 
 #undef BRAVE_AUDIOBUFFER_GETCHANNELDATA
+#undef BRAVE_AUDIOBUFFER_COPYFROMCHANNEL
