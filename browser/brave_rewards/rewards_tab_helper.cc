@@ -91,9 +91,9 @@ void RewardsTabHelper::ResourceLoadComplete(
       resource_load_info.resource_type == content::ResourceType::kXhr ||
       resource_load_info.resource_type == content::ResourceType::kImage ||
       resource_load_info.resource_type == content::ResourceType::kScript) {
-    rewards_service_->OnXHRLoad(tab_id_, GURL(resource_load_info.url),
-                                web_contents()->GetURL(),
-                                resource_load_info.referrer);
+    rewards_service_->OnXHRLoad(
+        tab_id_, GURL(resource_load_info.origin_of_final_url.GetURL()),
+        web_contents()->GetURL(), resource_load_info.referrer);
   }
 }
 
