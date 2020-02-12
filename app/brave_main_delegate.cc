@@ -168,7 +168,6 @@ bool BraveMainDelegate::BasicStartupComplete(int* exit_code) {
       features::kSmsReceiver.name,
       features::kVideoPlaybackQuality.name,
       features::kWebXr.name,
-      features::kWebXrGamepadModule.name,
 #if defined(OS_ANDROID)
       feed::kInterestFeedContentSuggestions.name,
 #endif
