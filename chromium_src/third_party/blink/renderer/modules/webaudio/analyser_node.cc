@@ -27,7 +27,7 @@ double GetFudgeFactor(blink::Document* document) {
     uint8_t domainkey[32];
     CHECK(h.Sign(domain, domainkey, sizeof domainkey));
     const uint64_t* fudge = reinterpret_cast<const uint64_t*>(&domainkey);
-    const double maxUInt64AsDouble = 18446744073709551615.0;
+    const double maxUInt64AsDouble = UINT64_MAX;
     fudge_factor = 0.99 + ((*fudge / maxUInt64AsDouble) / 100);
   } else {
     fudge_factor = 0.0;
